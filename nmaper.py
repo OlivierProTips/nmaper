@@ -4,23 +4,24 @@ import sys
 import subprocess
 import re
 
-nmap_result = subprocess.run(['nmap', '-p-', sys.argv[1]], stdout=subprocess.PIPE)
+nmap_parameters = ['nmap', sys.argv[1], '-Pn', '-p-']
+nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
-print(nmap_result.stdout.decode('utf-8'))
+print(nmap_result)
 
 regex = r"^\d.*$"
 
-res = re.findall(regex, nmap_result.stdout.decode('utf-8'),re.MULTILINE)
+res = re.findall(regex, nmap_result,re.MULTILINE)
 
 ports = []
 if res:
     for portline in res:
         ports.append(portline.split("/")[0])
 
-print(",".join(ports))
+    nmap_parameters.remove('-p-')
+    nmap_parameters.extend(['-p', ",".join(ports), '-A', '-oN', 'nmap.txt'])
+    full_nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode(('utf-8'))
 
-full_nmap_result = subprocess.run(['nmap', '-p', ",".join(ports), "-A", sys.argv[1], '-oN', 'nmap.txt'], stdout=subprocess.PIPE)
+    print(full_nmap_result)
 
-print(full_nmap_result.stdout.decode(('utf-8')))
-
-subprocess.run(['code', 'nmap.txt'])
+    subprocess.run(['code', 'nmap.txt'])

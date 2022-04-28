@@ -28,7 +28,6 @@ for arg in sys.argv[2:]:
     if arg in OPTIONS:
         nmap_parameters.extend(OPTIONS.get(arg))
 
-print(nmap_parameters)
 nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 print(nmap_result)
@@ -45,7 +44,6 @@ if res:
     if ALL_PORTS in nmap_parameters:
         nmap_parameters.remove(ALL_PORTS)
     nmap_parameters.extend(['-p', ",".join(ports), '-A', '-oN', FILENAME])
-    print(nmap_parameters)
     nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode(('utf-8'))
 
     print(nmap_result)

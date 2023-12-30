@@ -20,8 +20,8 @@ if res:
 
     nmap_parameters.remove('-p-')
     nmap_parameters.extend(['-p', ",".join(ports), '-A', '-oN', 'nmap.txt'])
-    full_nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode(('utf-8'))
+    nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode(('utf-8'))
 
-    print(full_nmap_result)
+    print(nmap_result)
 
     subprocess.run(['code', 'nmap.txt'])

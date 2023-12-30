@@ -44,7 +44,7 @@ if res:
         nmap_parameters.remove(ALL_PORTS)
         FILENAME = "nmap_all.txt"
         
-    nmap_parameters.extend(['-p', ",".join(ports), '-A', '-oN', FILENAME])
+    nmap_parameters.extend(['-p', ",".join(ports), '-sC', '-sV', '-oN', FILENAME])
     nmap_result = subprocess.run(nmap_parameters, stdout=subprocess.PIPE).stdout.decode(('utf-8'))
 
     print(nmap_result)

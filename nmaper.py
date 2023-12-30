@@ -16,7 +16,7 @@ if len(sys.argv) == 1:
     sys.exit(1)
 
 TARGET = sys.argv[1]
-nmap_parameters = ['nmap', TARGET, '-Pn']
+nmap_parameters = ['nmap', TARGET, '-Pn', '--min-rate=5000']
 ALL_PORTS = '-p-'
 FILENAME = "nmap.txt"
 
